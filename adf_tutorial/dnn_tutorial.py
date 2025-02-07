@@ -192,7 +192,7 @@ def dnn_fair_testing(dataset, sensitive_param, model_path, cluster_num, max_glob
         """
         Evaluate whether the test input after local perturbation is an individual discriminatory instance
         :param inp: test input
-        :return: whether it is an individual discriminatory instance
+        :return: float value indicating whether it is an individual discriminatory instance (1.0 for True, 0.0 for False)
         """
         result = check_for_error_condition(data_config[dataset], sess, x, preds, inp, sensitive_param)
 
@@ -203,7 +203,7 @@ def dnn_fair_testing(dataset, sensitive_param, model_path, cluster_num, max_glob
             local_disc_inputs.add(tuple(temp))
             local_disc_inputs_list.append(temp)
 
-        return not result
+        return float(not result)  # Convert boolean to float
 
     # select the seed input for fairness testing
     inputs = seed_test_input(clusters, min(max_global, len(X)))
