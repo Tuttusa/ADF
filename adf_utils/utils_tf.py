@@ -7,7 +7,6 @@ import time
 import warnings
 import math
 import sys
-sys.path.append('../')
 
 from .utils import batch_indices, _ArgsWrapper
 

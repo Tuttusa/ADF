@@ -1,7 +1,6 @@
 import numpy as np
 import tensorflow as tf
 import sys, os
-sys.path.append("../")
 import copy
 
 from tensorflow.python.platform import flags
@@ -285,18 +284,18 @@ def dnn_fair_testing(dataset, sensitive_param, model_path, cluster_num, max_glob
             sample[0] = clip(sample[0] + perturbation_size * cal_grad[0], data_config[dataset]).astype("int")
 
     # create the folder for storing the fairness testing result
-    if not os.path.exists('../results/'):
-        os.makedirs('../results/')
-    if not os.path.exists('../results/' + dataset + '/'):
-        os.makedirs('../results/' + dataset + '/')
-    if not os.path.exists('../results/'+ dataset + '/'+ str(sensitive_param) + '/'):
-        os.makedirs('../results/' + dataset + '/'+ str(sensitive_param) + '/')
+    if not os.path.exists('./results/'):
+        os.makedirs('./results/')
+    if not os.path.exists('./results/' + dataset + '/'):
+        os.makedirs('./results/' + dataset + '/')
+    if not os.path.exists('./results/'+ dataset + '/'+ str(sensitive_param) + '/'):
+        os.makedirs('./results/' + dataset + '/'+ str(sensitive_param) + '/')
 
     # storing the fairness testing result
-    np.save('../results/'+dataset+'/'+ str(sensitive_param) + '/suc_idx.npy', np.array(suc_idx))
-    np.save('../results/'+dataset+'/'+ str(sensitive_param) + '/global_samples.npy', np.array(global_disc_inputs_list))
-    np.save('../results/'+dataset+'/'+ str(sensitive_param) + '/local_samples.npy', np.array(local_disc_inputs_list))
-    np.save('../results/'+dataset+'/'+ str(sensitive_param) + '/disc_value.npy', np.array(value_list))
+    np.save('./results/'+dataset+'/'+ str(sensitive_param) + '/suc_idx.npy', np.array(suc_idx))
+    np.save('./results/'+dataset+'/'+ str(sensitive_param) + '/global_samples.npy', np.array(global_disc_inputs_list))
+    np.save('./results/'+dataset+'/'+ str(sensitive_param) + '/local_samples.npy', np.array(local_disc_inputs_list))
+    np.save('./results/'+dataset+'/'+ str(sensitive_param) + '/disc_value.npy', np.array(value_list))
 
     # print the overview information of result
     print("Total Inputs are " + str(len(tot_inputs)))
@@ -315,7 +314,7 @@ def main(argv=None):
 if __name__ == '__main__':
     flags.DEFINE_string("dataset", "census", "the name of dataset")
     flags.DEFINE_integer('sens_param', 9, 'sensitive index, index start from 1, 9 for gender, 8 for race')
-    flags.DEFINE_string('model_path', '../models/', 'the path for testing model')
+    flags.DEFINE_string('model_path', './models/', 'the path for testing model')
     flags.DEFINE_integer('cluster_num', 4, 'the number of clusters to form as well as the number of centroids to generate')
     flags.DEFINE_integer('max_global', 1000, 'maximum number of samples for global search')
     flags.DEFINE_integer('max_local', 1000, 'maximum number of samples for local search')

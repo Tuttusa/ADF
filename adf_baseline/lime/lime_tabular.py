@@ -405,8 +405,6 @@ class LimeTabularExplainer(object):
         ).ravel()
 
         # yss = predict_fn(inverse)
-        import sys
-        sys.path.append("../../")
         from adf_utils.utils_tf import model_prediction
         print(data)
         yss = model_prediction(sess, x, predict_fn, inverse)

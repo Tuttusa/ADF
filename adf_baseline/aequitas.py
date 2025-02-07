@@ -1,6 +1,4 @@
 import sys
-sys.path.append("../")
-
 import os
 import numpy as np
 import random
@@ -252,17 +250,17 @@ def aequitas(dataset, sensitive_param, model_path, max_global, max_local, step_s
                       float(len(local_disc_inputs)) / float(len(tot_inputs)) * 100))
 
     # create the folder for storing the fairness testing result
-    if not os.path.exists('../results/'):
-        os.makedirs('../results/')
-    if not os.path.exists('../results/' + dataset + '/'):
-        os.makedirs('../results/' + dataset + '/')
-    if not os.path.exists('../results/'+ dataset + '/'+ str(sensitive_param) + '/'):
-        os.makedirs('../results/' + dataset + '/'+ str(sensitive_param) + '/')
+    if not os.path.exists('./results/'):
+        os.makedirs('./results/')
+    if not os.path.exists('./results/' + dataset + '/'):
+        os.makedirs('./results/' + dataset + '/')
+    if not os.path.exists('./results/'+ dataset + '/'+ str(sensitive_param) + '/'):
+        os.makedirs('./results/' + dataset + '/'+ str(sensitive_param) + '/')
 
     # storing the fairness testing result
-    np.save('../results/'+dataset+'/'+ str(sensitive_param) + '/global_samples_aequitas.npy', np.array(global_disc_inputs_list))
-    np.save('../results/'+dataset+'/'+ str(sensitive_param) + '/disc_value_aequitas.npy', np.array(value_list))
-    np.save('../results/' + dataset + '/' + str(sensitive_param) + '/local_samples_aequitas.npy', np.array(local_disc_inputs_list))
+    np.save('./results/'+dataset+'/'+ str(sensitive_param) + '/global_samples_aequitas.npy', np.array(global_disc_inputs_list))
+    np.save('./results/'+dataset+'/'+ str(sensitive_param) + '/disc_value_aequitas.npy', np.array(value_list))
+    np.save('./results/' + dataset + '/' + str(sensitive_param) + '/local_samples_aequitas.npy', np.array(local_disc_inputs_list))
 
     # print the overview information of result
     print("Total Inputs are " + str(len(tot_inputs)))
@@ -280,7 +278,7 @@ def main(argv=None):
 if __name__ == '__main__':
     flags.DEFINE_string("dataset", "census", "the name of dataset")
     flags.DEFINE_integer('sens_param', 9, 'sensitive index, index start from 1, 9 for gender, 8 for race')
-    flags.DEFINE_string('model_path', '../models/census/test.model', 'the path for testing model')
+    flags.DEFINE_string('model_path', './models/census/test.model', 'the path for testing model')
     flags.DEFINE_integer('max_global', 1000, 'number of maximum samples for global search')
     flags.DEFINE_integer('max_local', 1000, 'number of maximum samples for local search')
     flags.DEFINE_float('step_size', 1.0, 'step size for perturbation')

@@ -1,7 +1,6 @@
 import sys
-sys.path.append("../")
 from sklearn.cluster import KMeans
-from sklearn.externals import joblib
+import joblib
 import os
 import tensorflow as tf
 from tensorflow.python.platform import flags
@@ -23,12 +22,12 @@ def cluster(dataset, cluster_num=4):
             centroids to generate
     :return: the K_means clustering model
     """
-    if os.path.exists('../clusters/' + dataset + '.pkl'):
-        clf = joblib.load('../clusters/' + dataset + '.pkl')
+    if os.path.exists('./clusters/' + dataset + '.pkl'):
+        clf = joblib.load('./clusters/' + dataset + '.pkl')
     else:
         X, Y, input_shape, nb_classes = datasets_dict[dataset]()
         clf = KMeans(n_clusters=cluster_num, random_state=2019).fit(X)
-        joblib.dump(clf , '../clusters/' + dataset + '.pkl')
+        joblib.dump(clf , './clusters/' + dataset + '.pkl')
     return clf
 
 def gradient_graph(x, preds, y=None):
