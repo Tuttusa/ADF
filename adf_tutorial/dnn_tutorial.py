@@ -119,13 +119,17 @@ class Local_Perturbation(object):
         ind_grad = self.sess.run(self.grad, feed_dict={self.x:np.array([x])})
         n_ind_grad = self.sess.run(self.grad, feed_dict={self.x:np.array([n_x])})
 
-        if np.zeros(self.input_shape).tolist() == ind_grad[0].tolist() and np.zeros(self.input_shape).tolist() == \
-                n_ind_grad[0].tolist():
+        # Convert gradients to float arrays to avoid boolean operations
+        ind_grad = np.array(ind_grad, dtype=np.float32)
+        n_ind_grad = np.array(n_ind_grad, dtype=np.float32)
+        zero_array = np.zeros(self.input_shape, dtype=np.float32)
+
+        if np.array_equal(ind_grad[0], zero_array) and np.array_equal(n_ind_grad[0], zero_array):
             probs = 1.0 / (self.input_shape-1) * np.ones(self.input_shape)
             probs[self.sens - 1] = 0
         else:
             # nomalize the reciprocal of gradients (prefer the low impactful feature)
-            grad_sum = 1.0 / (abs(ind_grad[0]) + abs(n_ind_grad[0]))
+            grad_sum = 1.0 / (np.abs(ind_grad[0]) + np.abs(n_ind_grad[0]))
             grad_sum[self.sens - 1] = 0
             probs = grad_sum / np.sum(grad_sum)
         probs = probs/probs.sum()
